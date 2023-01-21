@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:skt_app/database/database.dart';
 import 'package:skt_app/models/note_model.dart';
 import 'package:skt_app/screens/add_note_screen.dart';
@@ -31,11 +32,91 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildNote(Note note) {
+    print("resimpath - " + note.picPath!);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         children: [
-          ListTile(
+          Container(
+            //width: MediaQuery.of(context).size.width * 0.45,
+            decoration: BoxDecoration(
+              //color: AppTheme.of(context).secondaryBackground,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x3600000F),
+                  offset: Offset(0, 2),
+                )
+              ],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(0),
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          child: note.picPath! == ""
+                              ? Image.asset("images/noPic.jpg")
+                              : Image.file(
+                                  File(note.picPath!),
+                                  fit: BoxFit.fill,
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 4, 0, 0),
+                          child: Text(
+                            note.title!,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 4, 0, 0),
+                          child: Text(
+                            _dateFormatter.format(note.date!),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            /*width: MediaQuery.of(context).size.width * 0.55,
+              height: MediaQuery.of(context).size.width * 0.55,
+              child: note.picPath! == ""
+                  ? Image.asset("images/noPic.jpg")
+                  : Image.file(
+                      File(note.picPath!),
+                      fit: BoxFit.fill,
+                    )*/
+          ),
+          /*ListTile(
             title: Text(
               note.title!,
               style: TextStyle(
@@ -54,6 +135,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? TextDecoration.none
                       : TextDecoration.lineThrough),
             ),
+            leading: CircleAvatar(
+                child: note.picPath! == ""
+                    ? Image.asset("images/noPic.jpg")
+                    : Image.file(
+                        File(note.picPath!),
+                        fit: BoxFit.fill,
+                      )),
             trailing: Checkbox(
               onChanged: (value) {
                 note.status = value! ? 1 : 0;
@@ -74,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          ),
+          ),*/
           Divider(
             height: 5.0,
             color: Colors.black38,
@@ -88,6 +176,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              "YOUR FOODS",
+              textAlign: TextAlign.center,
+            )),
         backgroundColor: Colors.lightBlue[50],
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
@@ -118,9 +212,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 80.0),
-                itemCount: int.parse(snapshot.data!.length.toString()) + 1,
+                itemCount: int.parse(snapshot.data!.length.toString()),
                 itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
+                  /*if (index == 0) {
                     //0. index ise (en üst)
                     return Padding(
                       padding: EdgeInsets.symmetric(
@@ -148,8 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ]),
                     );
-                  }
-                  return _buildNote(snapshot.data![index - 1]);
+                  }*/
+                  return _buildNote(snapshot.data![index]);
                 },
               );
             }));

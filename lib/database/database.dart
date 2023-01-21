@@ -16,6 +16,7 @@ class DatabaseHelper {
   String colDate = "date";
   String colPriority = "priority";
   String colStatus = "status";
+  String colPicPath = "picPath";
 
   Future<Database?> get db async {
     if (_db == null) {
@@ -34,7 +35,7 @@ class DatabaseHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDate TEXT, $colPriority TEXT, $colStatus INTEGER)');
+        'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDate TEXT, $colPriority TEXT, $colStatus INTEGER, $colPicPath TEXT)');
   }
 
   Future<List<Map<String, dynamic>>> getNoteMapList() async {

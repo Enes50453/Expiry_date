@@ -4,10 +4,17 @@ class Note {
   DateTime? date;
   String? priority;
   int? status;
+  String? picPath;
 
-  Note({this.title, this.date, this.priority, this.status});
+  Note({this.title, this.date, this.priority, this.status, this.picPath});
 
-  Note.withId({this.id, this.title, this.date, this.priority, this.status});
+  Note.withId(
+      {this.id,
+      this.title,
+      this.date,
+      this.priority,
+      this.status,
+      this.picPath});
 
   ///to map
   ///
@@ -21,16 +28,17 @@ class Note {
     map["date"] = date!.toIso8601String();
     map["priority"] = priority;
     map["status"] = status; /////////
+    map["picPath"] = picPath;
     return map;
   }
 
   factory Note.fromMap(Map<String, dynamic> map) {
     return Note.withId(
-      id: map["id"],
-      title: map["title"],
-      date: DateTime.parse(map["date"]),
-      priority: map["priority"],
-      status: map["status"],
-    );
+        id: map["id"],
+        title: map["title"],
+        date: DateTime.parse(map["date"]),
+        priority: map["priority"],
+        status: map["status"],
+        picPath: map["picPath"]);
   }
 }

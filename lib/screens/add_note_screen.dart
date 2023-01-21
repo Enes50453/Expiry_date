@@ -1,10 +1,12 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:skt_app/database/database.dart';
 import 'package:skt_app/models/note_model.dart';
 import 'package:skt_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 class AddNoteScreen extends StatefulWidget {
   //const AddNoteScreen({super.key});
@@ -21,6 +23,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
   String _title = "";
   String _priority = "Low";
+  String _picPath = "";
   DateTime _date = DateTime.now();
   String btnText = "URUN EKLE";
   String titleText = "URUN EKLE";
@@ -31,6 +34,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
   final List<String> _priorities = ["Low", "Medium", "High"];
 
+  File? image;
+  final picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +45,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       _title = widget.note!.title!;
       _date = widget.note!.date!;
       _priority = widget.note!.priority!;
+      _picPath = widget.note!.picPath!;
 
       setState(() {
         btnText = "URUN GUNCELLE";
@@ -96,7 +103,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       _formKey.currentState!.save();
       print("$_title, $_date, $_priority");
 
-      Note note = Note(title: _title, date: _date, priority: _priority);
+      Note note = Note(
+          title: _title, date: _date, priority: _priority, picPath: _picPath);
 
       if (widget.note == null) {
         note.status = 0;
@@ -128,7 +136,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue[50],
+      backgroundColor: Colors.white,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -143,7 +151,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   child: Icon(
                     Icons.arrow_back,
                     size: 30.0,
-                    color: Colors.blueGrey[400],
+                    color: Colors.blue,
                   ),
                 ),
                 SizedBox(
@@ -152,7 +160,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 Text(
                   titleText,
                   style: TextStyle(
-                    color: Colors.blueGrey[400],
+                    color: Colors.blue,
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -164,6 +172,36 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.0),
+                        child: Container(
+                          child: image == null
+                              ? Stack(children: [
+                                  Image.asset("images/noPic.jpg"),
+                                  Positioned(
+                                    bottom: 2,
+                                    right: 8,
+                                    child: IconButton(
+                                      onPressed: () => onImageButtonPressed(
+                                          ImageSource.camera),
+                                      icon: Icon(Icons.camera_alt),
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 2,
+                                    right: 42,
+                                    child: IconButton(
+                                      onPressed: () => onImageButtonPressed(
+                                          ImageSource.gallery),
+                                      icon: Icon(Icons.search),
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ])
+                              : Image.file(image!),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.0),
                         child: TextFormField(
@@ -283,5 +321,23 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         ),
       ),
     );
+  }
+
+  onImageButtonPressed(ImageSource source) async {
+    try {
+      await getImage(source);
+      GallerySaver.saveImage(image!.path);
+      print(image!.path.toString());
+      _picPath = image!.path.toString();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future getImage(ImageSource source) async {
+    final PickedFile = await picker.pickImage(source: source);
+    setState(() {
+      image = File(PickedFile!.path);
+    });
   }
 }

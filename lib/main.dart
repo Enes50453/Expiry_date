@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter TODO List',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: Colors.blue,
       ),
       home: HomeScreen(),
     );
