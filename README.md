@@ -1,16 +1,16 @@
-# skt_app
+# Expiry date checking app(ongoing project)
 
-A new Flutter project.
+With this app;
+* You can see your foods and expiry dates,
+* You can add new food with picture, name and of course expiry date. 
+* For food picture, you can either use camera or choose from your phone gallery.
+* When expiry date of your food is close, you will get a notification from the app.(on progress)
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
+![App Screenshot](https://github.com/Enes50453/Expiry_date/blob/master/screenshots/ss1.jpeg)
+![App Screenshot](https://github.com/Enes50453/Expiry_date/blob/master/screenshots/ss2.jpeg)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
