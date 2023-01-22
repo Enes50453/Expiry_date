@@ -2,19 +2,12 @@ class Note {
   int? id;
   String? title;
   DateTime? date;
-  String? priority;
   int? status;
   String? picPath;
 
-  Note({this.title, this.date, this.priority, this.status, this.picPath});
+  Note({this.title, this.date, this.status, this.picPath});
 
-  Note.withId(
-      {this.id,
-      this.title,
-      this.date,
-      this.priority,
-      this.status,
-      this.picPath});
+  Note.withId({this.id, this.title, this.date, this.status, this.picPath});
 
   ///to map
   ///
@@ -26,7 +19,6 @@ class Note {
     }
     map["title"] = title;
     map["date"] = date!.toIso8601String();
-    map["priority"] = priority;
     map["status"] = status; /////////
     map["picPath"] = picPath;
     return map;
@@ -37,7 +29,6 @@ class Note {
         id: map["id"],
         title: map["title"],
         date: DateTime.parse(map["date"]),
-        priority: map["priority"],
         status: map["status"],
         picPath: map["picPath"]);
   }

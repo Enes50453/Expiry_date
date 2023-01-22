@@ -22,17 +22,14 @@ class AddNoteScreen extends StatefulWidget {
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
   String _title = "";
-  String _priority = "Low";
   String _picPath = "";
   DateTime _date = DateTime.now();
-  String btnText = "URUN EKLE";
-  String titleText = "URUN EKLE";
+  String btnText = "ADD";
+  String titleText = "ADD FOOD";
 
   TextEditingController _dateController = TextEditingController();
 
   final DateFormat _dateFormatter = DateFormat("MMM dd, yyy");
-
-  final List<String> _priorities = ["Low", "Medium", "High"];
 
   File? image;
   final picker = ImagePicker();
@@ -44,17 +41,17 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     if (widget.note != null) {
       _title = widget.note!.title!;
       _date = widget.note!.date!;
-      _priority = widget.note!.priority!;
       _picPath = widget.note!.picPath!;
 
       setState(() {
-        btnText = "URUN GUNCELLE";
-        titleText = "URUN GUNCELLE";
+        btnText = "UPDATE";
+        titleText = "UPDATE FOOD";
+        image = File(_picPath);
       });
     } else {
       setState(() {
-        btnText = "URUN EKLE";
-        titleText = "URUN EKLE";
+        btnText = "ADD";
+        titleText = "ADD FOOD";
       });
     }
 
@@ -101,10 +98,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     //////////
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print("$_title, $_date, $_priority");
+      print("$_title, $_date");
 
-      Note note = Note(
-          title: _title, date: _date, priority: _priority, picPath: _picPath);
+      Note note = Note(title: _title, date: _date, picPath: _picPath);
 
       if (widget.note == null) {
         note.status = 0;
@@ -207,7 +203,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         child: TextFormField(
                           style: TextStyle(fontSize: 18.0),
                           decoration: InputDecoration(
-                            labelText: "URUN ADI",
+                            labelText: "FOOD",
                             labelStyle: TextStyle(fontSize: 20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -228,49 +224,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           style: TextStyle(fontSize: 18.0),
                           onTap: _handleDatePicker, ////open date picker
                           decoration: InputDecoration(
-                            labelText: "SKT",
+                            labelText: "Expiry date",
                             labelStyle: TextStyle(fontSize: 20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
-                        child: DropdownButtonFormField(
-                          isDense: true,
-                          icon: Icon(Icons.arrow_drop_down_circle),
-                          iconSize: 22.0,
-                          iconEnabledColor: Theme.of(context).primaryColor,
-                          items: _priorities.map((String priority) {
-                            return DropdownMenuItem(
-                              value: priority,
-                              child: Text(
-                                priority,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                          style: TextStyle(fontSize: 18.0),
-                          decoration: InputDecoration(
-                            labelText: "ONCELIK",
-                            labelStyle: TextStyle(fontSize: 18.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          validator: (input) =>
-                              _priority == null ? "LUTFEN SECINIZ" : null,
-                          onChanged: (value) {
-                            setState(() {
-                              _priority = value.toString();
-                            });
-                          },
-                          value: _priority,
                         ),
                       ),
                       Container(
@@ -302,7 +261,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                               ),
                               child: ElevatedButton(
                                 child: Text(
-                                  "URUN SIL",
+                                  "DELETE",
                                   style: TextStyle(
                                     color: Colors.black54,
                                     fontSize: 20.0,
