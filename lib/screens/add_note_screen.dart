@@ -132,7 +132,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.amberAccent[100],
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -156,7 +156,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 Text(
                   titleText,
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.amber,
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -237,9 +237,11 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         height: 60.0,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
+                            color: Colors.amber,
                             borderRadius: BorderRadius.circular(30.0)),
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amber),
                           child: Text(
                             btnText,
                             style: TextStyle(

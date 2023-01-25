@@ -87,14 +87,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(4, 4, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(8, 4, 0, 0),
-                            child: Text(
-                              note.title!,
+                          Center(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(25, 4, 0, 0),
+                              child: Text(note.title!,
+                                  style: TextStyle(fontSize: 16),
+                                  textAlign: TextAlign.center),
                             ),
                           ),
                         ],
@@ -106,9 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(8, 4, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(25, 4, 0, 0),
                             child: Text(
                               _dateFormatter.format(note.date!),
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ],
@@ -117,63 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              /*width: MediaQuery.of(context).size.width * 0.55,
-                height: MediaQuery.of(context).size.width * 0.55,
-                child: note.picPath! == ""
-                    ? Image.asset("images/noPic.jpg")
-                    : Image.file(
-                        File(note.picPath!),
-                        fit: BoxFit.fill,
-                      )*/
             ),
           ),
-          /*ListTile(
-            title: Text(
-              note.title!,
-              style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.black54,
-                  decoration: note.status == 0
-                      ? TextDecoration.none
-                      : TextDecoration.lineThrough),
-            ),
-            subtitle: Text(
-              "${_dateFormatter.format(note.date!)} - ${note.priority}",
-              style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.black54,
-                  decoration: note.status == 0
-                      ? TextDecoration.none
-                      : TextDecoration.lineThrough),
-            ),
-            leading: CircleAvatar(
-                child: note.picPath! == ""
-                    ? Image.asset("images/noPic.jpg")
-                    : Image.file(
-                        File(note.picPath!),
-                        fit: BoxFit.fill,
-                      )),
-            trailing: Checkbox(
-              onChanged: (value) {
-                note.status = value! ? 1 : 0;
-                DatabaseHelper.instance.updateNote(note);
-                _updateNoteList();
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => HomeScreen()));
-              },
-              activeColor: Theme.of(context).primaryColor,
-              value: note.status == 1 ? true : false,
-            ),
-            onTap: () => Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (_) => AddNoteScreen(
-                  updateNoteList: _updateNoteList(),
-                  note: note,
-                ),
-              ),
-            ),
-          ),*/
           Divider(
             height: 5.0,
             color: Colors.black38,
@@ -188,14 +139,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            backgroundColor: Colors.amber,
             centerTitle: true,
             title: Text(
               "YOUR FOODS",
               textAlign: TextAlign.center,
             )),
-        backgroundColor: Colors.lightBlue[50],
+        backgroundColor: Colors.amberAccent[100],
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.amber,
           onPressed: () {
             Navigator.push(
                 context,
@@ -225,35 +177,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.symmetric(vertical: 80.0),
                 itemCount: int.parse(snapshot.data!.length.toString()),
                 itemBuilder: (BuildContext context, int index) {
-                  /*if (index == 0) {
-                    //0. index ise (en üst)
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 20.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "SKT UYGULAMASI",
-                              style: TextStyle(
-                                  color: Colors.blueGrey[400],
-                                  fontSize: 40.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              "$completedNoteCount of ${snapshot.data.length}",
-                              style: TextStyle(
-                                color: Colors.blueGrey[400],
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ]),
-                    );
-                  }*/
                   return _buildNote(snapshot.data![index]);
                 },
               );
