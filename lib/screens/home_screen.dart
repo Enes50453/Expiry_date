@@ -144,6 +144,10 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text(
               "YOUR FOODS",
               textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  ?.copyWith(color: Colors.purple),
             )),
         backgroundColor: Colors.amberAccent[100],
         floatingActionButton: FloatingActionButton(
