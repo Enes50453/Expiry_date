@@ -137,6 +137,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           child: Container(
+            //constraints: BoxConstraints(maxWidth: 200,minWidth: 200 ,maxHeight: 200,minHeight: 150),
             padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
